@@ -3,6 +3,8 @@ from pydantic import BaseModel
 import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
+from mangum import Mangum
+handler = Mangum(app)
 
 app = FastAPI()
 
