@@ -4,7 +4,6 @@ import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
 from mangum import Mangum
-handler = Mangum(app)
 
 app = FastAPI()
 
@@ -37,3 +36,7 @@ async def add_score(score: PlayerScore):
  score_doc = score.dict()
  result = await db.scores.insert_one(score_doc)
  return {"message": "Score recorded", "id": str(result.inserted_id)}
+
+
+
+handler = Mangum(app)
