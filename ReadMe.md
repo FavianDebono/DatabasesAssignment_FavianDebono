@@ -1,6 +1,6 @@
 # Multimedia Game Asset API – FastAPI + MongoDB
 
-This project is a RESTful web API developed for the Database Essentials home assignment. It uses FastAPI to manage multimedia game assets such as sprites (images), audio files, and player scores. The database is hosted on MongoDB Atlas.
+This project is a RESTful web API developed for the Database Essentials home assignment. It uses FastAPI to manage multimedia game assets such as sprites (images), audio files, and player scores. The database is hosted on MongoDB Atlas. Project is deployed on Vercel. 
 
 ---
 
