@@ -44,4 +44,4 @@ async def add_score(score: PlayerScore, db=Depends(get_db)):
     result = await db.scores.insert_one(score_doc)
     return {"message": "Score recorded", "id": str(result.inserted_id)}
 
-handler = Mangum(app)
+#handler = Mangum(app)
