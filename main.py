@@ -11,11 +11,10 @@ app = FastAPI()
 load_dotenv()
 def get_db():
     client = motor.motor_asyncio.AsyncIOMotorClient(
-        os.getenv("MONGO_URI"),
-        serverSelectionTimeoutMS=5000
+        "mongodb+srv://admin:NceSWZ6O0a2Kqrry@multimediadb.voz4p8c.mongodb.net/?retryWrites=true&w=majority&appName=MultimediaDB"
     )
     return client["multimedia_db"]
-
+#os.getenv("MONGO_URI")
 class PlayerScore(BaseModel):
  player_name: str
  score: int
