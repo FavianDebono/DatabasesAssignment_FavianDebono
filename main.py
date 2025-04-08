@@ -1,20 +1,24 @@
-from fastapi import FastAPI, File, UploadFile, Depends
+from fastapi import FastAPI, Depends, File, UploadFile, HTTPException
 from pydantic import BaseModel
 import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
 from mangum import Mangum
 
-app = FastAPI()
 load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+if not MONGO_URI:
+    raise RuntimeError("MONGO_URI not set in environment variables.")
 
-# Dependency
 async def get_db():
-    client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGO_URI"))
+    # Create a new MongoDB client connection for each request.
+    client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
     try:
         yield client["multimedia_db"]
     finally:
-        client.close()
+        client.close()  # Ensures the client is closed after the request
+
+app = FastAPI()
 
 class PlayerScore(BaseModel):
     player_name: str
