@@ -1,23 +1,23 @@
-#Multimedia Game Asset API – FastAPI + MongoDB
+# Multimedia Game Asset API – FastAPI + MongoDB
 
 This project is a RESTful web API developed for the Database Essentials home assignment. It uses FastAPI to manage multimedia game assets such as sprites (images), audio files, and player scores. The database is hosted on MongoDB Atlas.
 
 ---
 
-##Development Environment Setup
+## Development Environment Setup
 
 - Python version: 3.13.2 (64-bit)
 - Code Editor: Visual Studio Code
 - Virtual Environment: Created using `venv`
 
-###Creating the virtual environment
+### Creating the virtual environment
 
 ```
 py -m venv env
 env\Scripts\activate
 ```
 
-###Installed Dependencies
+### Installed Dependencies
 
 ```
 pip install fastapi uvicorn motor pydantic python-dotenv requests python-multipart
@@ -31,7 +31,7 @@ pip freeze > requirements.txt
 
 ---
 
-##Running the API Locally
+## Running the API Locally
 
 1. Activate the virtual environment:
 
