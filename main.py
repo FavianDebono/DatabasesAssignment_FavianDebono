@@ -11,13 +11,16 @@ app = FastAPI()
 load_dotenv()
 def get_db():
     client = motor.motor_asyncio.AsyncIOMotorClient(
-        "mongodb+srv://admin:NceSWZ6O0a2Kqrry@multimediadb.voz4p8c.mongodb.net/?retryWrites=true&w=majority&appName=MultimediaDB"
+        os.getenv("MONGO_URI")
     )
     return client["multimedia_db"]
-#os.getenv("MONGO_URI")
+
+db = get_db()
+
 class PlayerScore(BaseModel):
  player_name: str
  score: int
+ 
 @app.post("/upload_sprite")
 async def upload_sprite(file: UploadFile = File(...)):
  db = get_db()
