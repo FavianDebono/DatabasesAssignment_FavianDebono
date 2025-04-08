@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, File, UploadFile, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
@@ -21,8 +21,8 @@ async def get_db():
 app = FastAPI()
 
 class PlayerScore(BaseModel):
-    player_name: str
-    score: int
+    player_name: str = Field(..., min_length=1, max_length=50)
+    score: int = Field(..., ge=0, le=999999)
 
 @app.post("/upload_sprite")
 async def upload_sprite(file: UploadFile = File(...), db=Depends(get_db)):
