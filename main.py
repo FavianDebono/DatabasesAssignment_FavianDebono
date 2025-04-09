@@ -37,21 +37,21 @@ class PlayerScore(BaseModel):
 #   Stores the file in the MongoDB "sprites" collection with its filename and binary content.
 @app.post("/upload_sprite")
 async def upload_sprite(file: UploadFile = File(...), db=Depends(get_db)):
-    content = await file.read()
-    sprite_doc = {"filename": file.filename, "content": content}
-    result = await db.sprites.insert_one(sprite_doc)
-    return {"message": "Sprite uploaded", "id": str(result.inserted_id)}
+    content = await file.read() # Read the file content
+    sprite_doc = {"filename": file.filename, "content": content} # Create a document with filename and content
+    result = await db.sprites.insert_one(sprite_doc) # Insert the document into the MongoDB collection
+    return {"message": "Sprite uploaded", "id": str(result.inserted_id)} # Return the ID of the inserted document as a response
 
 # Endpoint: /sprites/{id}
 # Method: GET
 # Description:
 #   Fetches a sprite document by ID.
-@app.get("/sprites/{id}")
+@app.get("/sprites/{id}") 
 async def get_sprite(id: str, db=Depends(get_db)):
-    sprite = await db.sprites.find_one({"_id": ObjectId(id)})
-    if not sprite:
-        raise HTTPException(status_code=404, detail="Sprite not found")
-    return {"filename": sprite["filename"]}
+    sprite = await db.sprites.find_one({"_id": ObjectId(id)}) # Fetch the sprite document from the database using its ID
+    if not sprite: # If the sprite is not found, raise a 404 error
+        raise HTTPException(status_code=404, detail="Sprite not found") 
+    return {"filename": sprite["filename"]} # Return the filename of the sprite if found
 
 # Endpoint: /sprites/{id}
 # Method: PUT
@@ -59,25 +59,25 @@ async def get_sprite(id: str, db=Depends(get_db)):
 #   Updates the sprite's file.
 @app.put("/sprites/{id}")
 async def update_sprite(id: str, file: UploadFile = File(...), db=Depends(get_db)):
-    content = await file.read()
-    result = await db.sprites.update_one(
+    content = await file.read() # Read the new file content
+    result = await db.sprites.update_one( # Update the existing sprite document in the database
         {"_id": ObjectId(id)},
         {"$set": {"filename": file.filename, "content": content}}
     )
-    if result.matched_count == 0:
+    if result.matched_count == 0: # If no document was matched, raise a 404 error
         raise HTTPException(status_code=404, detail="Sprite not found")
-    return {"message": "Sprite updated"}
+    return {"message": "Sprite updated"} # Return a success message
 
 # Endpoint: /sprites/{id}
 # Method: DELETE
 # Description:
 #   Deletes a sprite document by ID.
 @app.delete("/sprites/{id}")
-async def delete_sprite(id: str, db=Depends(get_db)):
-    result = await db.sprites.delete_one({"_id": ObjectId(id)})
-    if result.deleted_count == 0:
+async def delete_sprite(id: str, db=Depends(get_db)): 
+    result = await db.sprites.delete_one({"_id": ObjectId(id)}) # Delete the sprite document from the database using its ID
+    if result.deleted_count == 0: # If no document was deleted, raise a 404 error
         raise HTTPException(status_code=404, detail="Sprite not found")
-    return {"message": "Sprite deleted"}
+    return {"message": "Sprite deleted"} # Return a success message
 
 # Endpoint: /upload_audio
 # Method: POST
